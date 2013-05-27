@@ -86,6 +86,13 @@
            </f:facet>
            <h:outputText value="#{account.balance}"/>
          </h:column>           
+         
+         <h:column>
+           <f:facet name="header">
+             <h:outputText value="Action"/>
+           </f:facet>
+           <h:commandButton value="Edit" action="#{controller.editAccount(account)}"/>
+         </h:column>
        </h:dataTable>
        
        

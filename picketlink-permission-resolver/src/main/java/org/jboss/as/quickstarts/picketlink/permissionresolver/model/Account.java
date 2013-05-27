@@ -32,6 +32,8 @@ import javax.persistence.Id;
 public class Account implements Serializable {
     private static final long serialVersionUID = -2668128008558471711L;
 
+    public static final String PERMISSION_EDIT = "edit";
+
     @Id
     private String number;
     private String name;

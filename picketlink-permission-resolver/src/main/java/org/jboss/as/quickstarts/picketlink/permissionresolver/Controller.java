@@ -19,12 +19,14 @@ package org.jboss.as.quickstarts.picketlink.permissionresolver;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 import org.jboss.as.quickstarts.picketlink.permissionresolver.model.Account;
+import org.picketlink.Identity;
 
 
 /**
@@ -43,8 +45,20 @@ public class Controller {
 
     @Inject EntityManager entityManager;
 
+    @Inject Identity identity;
+
     public List<Account> getAccounts() {
         return entityManager.createQuery("select a from Account a", Account.class).getResultList();
+    }
+
+    public void editAccount(Account value) {
+        if (identity.hasPermission(value, Account.PERMISSION_EDIT)) {
+            facesContext.addMessage(null, new FacesMessage("You have permission to edit account #" +
+                    value.getNumber()));
+        } else {
+            facesContext.addMessage(null, new FacesMessage("You do <b>not</b> have permission to edit account #" +
+                    value.getNumber()));
+        }
     }
 
     public String getStackTrace() {
