@@ -14,15 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.as.quickstarts.picketlink.deltaspike.authorization;
+package org.jboss.as.quickstarts.picketlink.permissionresolver;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.jboss.as.quickstarts.picketlink.deltaspike.authorization.annotations.Admin;
-import org.jboss.as.quickstarts.picketlink.deltaspike.authorization.annotations.Employee;
 
 
 /**
@@ -38,21 +34,6 @@ public class Controller {
     @Inject
     private FacesContext facesContext;
 
-    /**
-     * Only users with the employee application role can invoke this method
-     */
-    @Employee
-    public void employeeMethod() {
-        facesContext.addMessage(null, new FacesMessage("You executed an @Employee method"));
-    }
-
-    /**
-     * Only users with the admin application role can invoke this method
-     */
-    @Admin
-    public void adminMethod() {
-        facesContext.addMessage(null, new FacesMessage("You executed an @Admin method"));
-    }
 
     public String getStackTrace() {
         Throwable throwable = (Throwable)  FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("javax.servlet.error.exception");
