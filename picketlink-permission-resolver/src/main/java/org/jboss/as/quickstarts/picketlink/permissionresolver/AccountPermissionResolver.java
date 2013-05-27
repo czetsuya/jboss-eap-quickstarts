@@ -26,6 +26,8 @@ import org.picketlink.Identity;
 import org.picketlink.permission.PermissionResolver;
 
 /**
+ * This custom permission resolver implementation grants the currently logged in user
+ * the "edit" permission for Account objects which they are the manager for.
  *
  * @author Shane Bryzak
  */
@@ -38,7 +40,9 @@ public class AccountPermissionResolver implements PermissionResolver {
     public PermissionStatus hasPermission(Object resource, String permission) {
         if (resource instanceof Account) {
             Account account = (Account) resource;
-            if (identity != null && identity.getAgent().getLoginName().equals(account.getManager())) {
+            if (Account.PERMISSION_EDIT.equals(permission) &&
+                identity != null && 
+                identity.getAgent().getLoginName().equals(account.getManager())) {
                 return PermissionStatus.ALLOW;
             } else {
                 return PermissionStatus.DENY;

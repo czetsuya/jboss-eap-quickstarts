@@ -56,7 +56,7 @@ public class Controller {
             facesContext.addMessage(null, new FacesMessage("You have permission to edit account #" +
                     value.getNumber()));
         } else {
-            facesContext.addMessage(null, new FacesMessage("You do <b>not</b> have permission to edit account #" +
+            facesContext.addMessage(null, new FacesMessage("You do NOT have permission to edit account #" +
                     value.getNumber()));
         }
     }
