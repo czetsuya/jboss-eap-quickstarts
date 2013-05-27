@@ -44,8 +44,8 @@
 
     <p>
       Tip: you can login with a either of these accounts:<br/>
-      john/demo has been granted the employee role<br/>
-      mary/demo has been granted the admin role
+      kate/demo<br/>
+      phil/demo
     </p>
 
 </h:form>
@@ -55,14 +55,40 @@
  Welcome <b>#{identity.agent.loginName}</b>!
        <h:commandButton value="Logout" action="#{identity.logout}" />
        <p />
-       Execute an action:                  
-       <h:commandButton value="Employees only Method" action="#{controller.employeeMethod}" />
-       <h:commandButton value="Admins only Method" action="#{controller.adminMethod}" />
        
-       <p>
-         Users with the "employee" role may only invoke the employees-only method, while users with
-         the "admin" role may invoke both methods.
-       </p>
+       <h3>Accounts</h3>
+       
+       <h:dataTable value="#{controller.accounts}" var="account">
+         <h:column>
+           <f:facet name="header">
+             <h:outputText value="Account #"/>
+           </f:facet>
+           <h:outputText value="#{account.number}"/>
+         </h:column>
+         
+         <h:column>
+           <f:facet name="header">
+             <h:outputText value="Account Name"/>
+           </f:facet>
+           <h:outputText value="#{account.name}"/>
+         </h:column>      
+         
+         <h:column>
+           <f:facet name="header">
+             <h:outputText value="Manager"/>
+           </f:facet>
+           <h:outputText value="#{account.manager}"/>
+         </h:column>     
+         
+         <h:column>
+           <f:facet name="header">
+             <h:outputText value="Balance"/>
+           </f:facet>
+           <h:outputText value="#{account.balance}"/>
+         </h:column>           
+       </h:dataTable>
+       
+       
    </h:form>
 </ui:fragment>
 

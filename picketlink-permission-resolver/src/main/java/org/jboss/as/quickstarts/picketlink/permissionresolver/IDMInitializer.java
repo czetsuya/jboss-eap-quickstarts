@@ -43,34 +43,20 @@ public class IDMInitializer {
     @PostConstruct
     public void create() {
 
-        // Create user john
-        User john = new SimpleUser("john");
-        john.setEmail("john@acme.com");
-        john.setFirstName("John");
-        john.setLastName("Smith");
-        identityManager.add(john);
-        identityManager.updateCredential(john, new Password("demo"));
+        // Create user kate
+        User kate = new SimpleUser("kate");
+        kate.setEmail("kate@acme.com");
+        kate.setFirstName("Kate");
+        kate.setLastName("Smith");
+        identityManager.add(kate);
+        identityManager.updateCredential(kate, new Password("demo"));
 
-        // Create user mary
-        User mary = new SimpleUser("mary");
-        mary.setEmail("mary@acme.com");
-        mary.setFirstName("Mary");
-        mary.setLastName("Jones");
-        identityManager.add(mary);
-        identityManager.updateCredential(mary, new Password("demo"));
-
-        // Create role "employee"
-        Role employee = new SimpleRole("employee");
-        identityManager.add(employee);
-
-        // Create application role "superuser"
-        Role admin = new SimpleRole("admin");
-        identityManager.add(admin);
-
-        // Grant the "employee" application role to john
-        identityManager.grantRole(john, employee);
-
-        // Grant the "admin" application role to jane
-        identityManager.grantRole(mary, admin);
+        // Create user phil
+        User phil = new SimpleUser("phil");
+        phil.setEmail("phil@acme.com");
+        phil.setFirstName("Philip");
+        phil.setLastName("Jones");
+        identityManager.add(phil);
+        identityManager.updateCredential(phil, new Password("demo"));
     }
 }

@@ -23,6 +23,8 @@ import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * This class uses CDI to alias Java EE resources, such as the persistence context, to CDI beans
@@ -41,5 +43,9 @@ public class Resources {
     public FacesContext getFacesContext() {
         return FacesContext.getCurrentInstance();
     }
+
+    @Produces
+    @PersistenceContext(unitName = "default")
+    private EntityManager entityManager;
 
 }

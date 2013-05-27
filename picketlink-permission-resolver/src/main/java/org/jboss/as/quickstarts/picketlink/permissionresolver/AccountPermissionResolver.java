@@ -16,44 +16,42 @@
  */
 package org.jboss.as.quickstarts.picketlink.permissionresolver;
 
-import java.util.List;
+import java.io.Serializable;
 
-import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 import org.jboss.as.quickstarts.picketlink.permissionresolver.model.Account;
-
+import org.picketlink.Identity;
+import org.picketlink.permission.PermissionResolver;
 
 /**
- * The controller defines the business logic for this example
- * 
+ *
  * @author Shane Bryzak
- * 
  */
-// Expose the bean to EL
-@Named
-@RequestScoped
-public class Controller {
+public class AccountPermissionResolver implements PermissionResolver {
 
-    @Inject
-    private FacesContext facesContext;
-
+    @Inject Identity identity;
     @Inject EntityManager entityManager;
 
-    public List<Account> getAccounts() {
-        return entityManager.createQuery("select a from Account a", Account.class).getResultList();
+    @Override
+    public PermissionStatus hasPermission(Object resource, String permission) {
+        if (resource instanceof Account) {
+            Account account = (Account) resource;
+            if (identity != null && identity.getAgent().getLoginName().equals(account.getManager())) {
+                return PermissionStatus.ALLOW;
+            } else {
+                return PermissionStatus.DENY;
+            }
+        } else {
+            return PermissionStatus.NOT_APPLICABLE;
+        }
     }
 
-    public String getStackTrace() {
-        Throwable throwable = (Throwable)  FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("javax.servlet.error.exception");
-        StringBuilder builder = new StringBuilder();
-        builder.append(throwable.getMessage()).append("\n");
-        for (StackTraceElement element : throwable.getStackTrace()) {
-            builder.append(element).append("\n");
-        }
-        return builder.toString();
+    @Override
+    public PermissionStatus hasPermission(Class<?> resource, Serializable identifier, String permission) {
+        Account account = entityManager.getReference(Account.class, identifier);
+        return hasPermission(account, permission);
     }
+
 }
